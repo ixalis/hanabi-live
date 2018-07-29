@@ -4763,7 +4763,12 @@ function HanabiUI(lobby, gameID) {
     };
 
     this.enterReplay = function enterReplay(enter) {
-        if (!this.replay && enter) {
+        if (this.replay === enter) {
+            // If desired and actual replay modes are equivalent, no action
+            return;
+        }
+
+        if (enter) {
             this.replay = true;
             this.replayPos = this.replayLog.length;
             this.replayTurn = this.replayMax;
@@ -4775,7 +4780,7 @@ function HanabiUI(lobby, gameID) {
             }
             UILayer.draw();
             cardLayer.draw();
-        } else if (this.replay && !enter) {
+        } else {
             this.performReplay(this.replayMax, true);
             this.replay = false;
             replayArea.hide();
