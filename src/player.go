@@ -66,18 +66,16 @@ func (p *Player) GiveClue(g *Game, d *CommandData) bool {
 	g.NotifyAction()
 
 	// Send the "message" message about the clue
-	text := p.Name + " tells " + g.Players[d.Target].Name + " "
-	if len(list) != 0 {
-		text += "about "
-		words := []string{
-			"one",
-			"two",
-			"three",
-			"four",
-			"five",
-		}
-		text += words[len(list)-1] + " "
+	text := p.Name + " tells " + g.Players[d.Target].Name + " about "
+	words := []string{
+		"zero",
+		"one",
+		"two",
+		"three",
+		"four",
+		"five",
 	}
+	text += words[len(list)] + " "
 
 	if d.Clue.Type == 0 {
 		// Number clue
@@ -86,7 +84,7 @@ func (p *Player) GiveClue(g *Game, d *CommandData) bool {
 		// Color clue
 		text += variants[g.Options.Variant].Clues[d.Clue.Value].Name
 	}
-	if len(list) > 1 {
+	if len(list) != 1 {
 		text += "s"
 	}
 	g.Actions = append(g.Actions, Action{
